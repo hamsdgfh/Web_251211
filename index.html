@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>자기소개 - 신민석</title>
+
+    <style>
+        /* 기본 세팅 */
+        :root {
+            --bg-color: #f5f5f7;
+            --bg-alt: #ffffff;
+            --text-color: #222;
+            --accent: #4f46e5;
+            --accent-soft: rgba(79, 70, 229, 0.12);
+            --border-color: #e0e0e7;
+            --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.08);
+        }
+
+        body.dark {
+            --bg-color: #0f172a;
+            --bg-alt: #111827;
+            --text-color: #e5e7eb;
+            --accent: #6366f1;
+            --accent-soft: rgba(99, 102, 241, 0.16);
+            --border-color: #1f2937;
+            --shadow-soft: 0 22px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top left, #e0f2fe, transparent 55%),
+                        radial-gradient(circle at bottom right, #e0e7ff, transparent 50%),
+                        var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* 상단 헤더(모바일/태블릿) */
+        .top-header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            backdrop-filter: blur(14px);
+            background: linear-gradient(to bottom,
+                        rgba(248, 250, 252, 0.9),
+                        rgba(248, 250, 252, 0.65));
+            border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 1.2rem;
+        }
+
+        body.dark .top-header {
+            background: linear-gradient(to bottom,
+                        rgba(15, 23, 42, 0.92),
+                        rgba(15, 23, 42, 0.7));
+            border-color: rgba(75, 85, 99, 0.6);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .menu-toggle {
+            font-size: 1.4rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+        }
+
+        .top-nav {
+            position: fixed;
+            inset: 3.2rem 1.2rem auto;
+            background: var(--bg-alt);
+            border-radius: 1.2rem;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-color);
+            display: none;
+            flex-direction: column;
+            padding: 0.7rem;
+        }
+
+        .top-nav a {
+            padding: 0.55rem 0.8rem;
+            border-radius: 0.8rem;
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+
+        .top-nav a:hover {
+            background: var(--accent-soft);
+        }
+
+        .top-nav.open {
+            display: flex;
+        }
+
+        /* 전체 레이아웃 */
+        .layout {
+            display: flex;
+            max-width: 1120px;
+            margin: 1.2rem auto;
+            padding: 0 1rem;
+            gap: 1.5rem;
+        }
+
+        /* 사이드바 */
+        .sidebar {
+            display: none; /* 모바일/태블릿에서는 안 보이게 */
+        }
+
+        .profile-card {
+            position: sticky;
+            top: 1.2rem;
+            background: rgba(248, 250, 252, 0.9);
+            backdrop-filter: blur(18px);
+            border-radius: 1.8rem;
+            padding: 1.7rem 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-soft);
+        }
+
+        body.dark .profile-card {
+            background: rgba(15, 23, 42, 0.94);
+        }
+
+        .profile-image {
+            width: 90px;
+            height: 90px;
+            border-radius: 999px;
+            background: radial-gradient(circle at 30% 20%, #4f46e5, #0ea5e9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .profile-role {
+            font-size: 0.95rem;
+            color: #6b7280;
+            margin-bottom: 0.8rem;
+        }
+
+        body.dark .profile-role {
+            color: #9ca3af;
+        }
+
+        .profile-desc {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-info p {
+            font-size: 0.85rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .profile-info strong {
+            font-weight: 600;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin: 1.1rem 0;
+        }
+
+        .sidebar-nav a {
+            font-size: 0.85rem;
+            padding: 0.45rem 0.7rem;
+            border-radius: 999px;
+            border: 1px solid var(--border-color);
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .sidebar-nav a:hover {
+            background: var(--accent-soft);
+        }
+
+        .theme-toggle {
+            width: 100%;
+            margin-top: 0.4rem;
+            padding: 0.55rem 0.8rem;
+            border-radius: 999px;
+            border: none;
+            background: var(--accent-soft);
+            cursor: pointer;
+        }
+
+        /* 메인 부분 */
+        main {
+            flex: 1;
+        }
+
+        .section {
+            background: var(--bg-alt);
+            border-radius: 1.6rem;
+            padding: 1.4rem 1.3rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .section-alt {
+            background: radial-gradient(circle at top right, #e0f2fe 0, transparent 50%),
+                        var(--bg-alt);
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .section-text {
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+        }
+
+        /* 강조 박스 */
+        .highlight-box {
+            margin-top: 0.6rem;
+            padding: 0.8rem 0.9rem;
+            border-radius: 1rem;
+            background: var(--accent-soft);
+            font-size: 0.9rem;
+        }
+
+        .highlight-box ul {
+            list-style: none;
+            margin-top: 0.4rem;
+        }
+
+        .highlight-box li {
+            margin-bottom: 0.25rem;
+        }
+
+        /* 스킬 */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.7rem;
+        }
+
+        .skill-card {
+            padding: 0.8rem;
+            border-radius: 1.1rem;
+            border: 1px solid var(--border-color);
+            background: rgba(248, 250, 252, 0.8);
+        }
+
+        body.dark .skill-card {
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        .skill-card h3 {
+            font-size: 0.98rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .skill-card p {
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-bar {
+            width: 100%;
+            height: 7px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.23);
+            overflow: hidden;
+        }
+
+        .skill-level {
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(to right, #4f46e5, #0ea5e9);
+        }
+
+        /* 프로젝트 */
+        .project-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+        }
+
+        .project-card {
+            padding: 0.8rem 0.9rem;
+            border-radius: 1.2rem;
+            border: 1px solid var(--border-color);
+            background: rgba(248, 250, 252, 0.9);
+        }
+
+        body.dark .project-card {
+            background: rgba(15, 23, 42, 0.96);
+        }
+
+        .project-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .project-card p {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card ul {
+            list-style: disc;
+            padding-left: 1.1rem;
+            font-size: 0.85rem;
+        }
+
+        /* 연락 */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+        }
+
+        .contact-grid h3 {
+            font-size: 0.98rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .contact-grid p,
+        .contact-grid li {
+            font-size: 0.9rem;
+        }
+
+        .contact-grid ul {
+            padding-left: 1.1rem;
+            list-style: disc;
+        }
+
+        /* 푸터 */
+        .footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #9ca3af;
+            margin: 0.8rem 0 0.4rem;
+        }
+
+        /* --------- 반응형 --------- */
+
+        /* 태블릿 (약 768px 이상) */
+        @media (min-width: 768px) {
+            .top-header {
+                padding-inline: 2rem;
+            }
+
+            .top-nav {
+                position: static;
+                display: flex !important;
+                background: none;
+                border: none;
+                box-shadow: none;
+                flex-direction: row;
+                gap: 0.4rem;
+                padding: 0;
+            }
+
+            .top-nav a {
+                font-size: 0.9rem;
+                padding: 0.4rem 0.7rem;
+            }
+
+            .menu-toggle {
+                display: none;
+            }
+
+            .layout {
+                margin-top: 1.8rem;
+            }
+
+            .section {
+                padding: 1.8rem 1.6rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .project-list {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .contact-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        /* 데스크톱 (약 1024px 이상) */
+        @media (min-width: 1024px) {
+            .layout {
+                padding: 0 1.5rem;
+            }
+
+            .sidebar {
+                display: block;
+                width: 280px;
+                flex-shrink: 0;
+            }
+
+            main {
+                max-width: 760px;
+            }
+
+            .top-header {
+                display: none; /* 데스크톱에서는 상단 헤더 숨기고 사이드바 사용 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 상단 헤더 (모바일/태블릿용) -->
+    <header class="top-header">
+        <div class="logo">MS</div>
+        <button class="menu-toggle" aria-label="메뉴 열기/닫기">
+            ☰
+        </button>
+        <nav class="top-nav">
+            <a href="#about">소개</a>
+            <a href="#skills">기술</a>
+            <a href="#projects">프로젝트</a>
+            <a href="#contact">연락</a>
+        </nav>
+    </header>
+
+    <div class="layout">
+        <!-- 왼쪽 사이드바 (데스크톱에서만 고정) -->
+        <aside class="sidebar">
+            <div class="profile-card">
+                <div class="profile-image">
+                    <!-- 프로필 사진 있으면 <img>로 바꿔도 됨 -->
+                    <span>MS</span>
+                </div>
+                <h1 class="profile-name">신민석</h1>
+                <p class="profile-role">컴퓨터공학과 / 웹 개발 입문자</p>
+                <p class="profile-desc">
+                    사람들에게 편리함과 즐거움을 줄 수 있는
+                    웹 서비스를 만드는 것을 목표로 공부하고 있습니다.
+                </p>
+
+                <div class="profile-info">
+                    <p><strong>학교</strong> : ○○대학교</p>
+                    <p><strong>학과</strong> : AI소프트웨어학과</p>
+                    <p><strong>관심 분야</strong> : 웹 프론트엔드, 보안, AI</p>
+                </div>
+
+                <div class="sidebar-nav">
+                    <a href="#about">소개</a>
+                    <a href="#skills">기술</a>
+                    <a href="#projects">프로젝트</a>
+                    <a href="#contact">연락</a>
+                </div>
+
+                <button class="theme-toggle" id="themeToggle">
+                    🌙 다크 모드
+                </button>
+            </div>
+        </aside>
+
+        <!-- 메인 콘텐츠 -->
+        <main>
+            <!-- 소개 섹션 -->
+            <section id="about" class="section">
+                <h2 class="section-title">👋 자기소개</h2>
+                <p class="section-text">
+                    안녕하세요, 저는 <strong>신민석</strong>입니다.  
+                    새로운 기술을 배우는 것을 좋아하고, 직접 웹사이트를 만들어보며
+                    프론트엔드 개발에 흥미를 느끼고 있습니다.  
+                    최근에는 HTML, CSS, JavaScript를 사용해 간단한 웹페이지를
+                    만들고, GitHub에 올려보는 연습을 하고 있습니다.
+                </p>
+
+                <div class="highlight-box">
+                    <h3>관심 있는 키워드</h3>
+                    <ul>
+                        <li>🌐 반응형 웹 디자인</li>
+                        <li>🔒 웹 보안 기초</li>
+                        <li>🤖 AI와 웹의 결합</li>
+                        <li>🎮 게임/인터랙티브 웹</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 기술 섹션 -->
+            <section id="skills" class="section section-alt">
+                <h2 class="section-title">🛠 보유 기술</h2>
+
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <h3>프론트엔드 기초</h3>
+                        <p>HTML, CSS, 기본적인 레이아웃 구성, 반응형 디자인</p>
+                        <div class="skill-bar">
+                            <div class="skill-level" style="width: 60%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-card">
+                        <h3>JavaScript</h3>
+                        <p>기본 문법, 이벤트 처리, DOM 조작</p>
+                        <div class="skill-bar">
+                            <div class="skill-level" style="width: 45%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-card">
+                        <h3>C / C++ 기초</h3>
+                        <p>배열, 반복문, 정렬/탐색 알고리즘 기초</p>
+                        <div class="skill-bar">
+                            <div class="skill-level" style="width: 50%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-card">
+                        <h3>협업 & 공부 방식</h3>
+                        <p>Notion 정리, GitHub에 코드 업로드, 스터디 참여</p>
+                        <div class="skill-bar">
+                            <div class="skill-level" style="width: 70%"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 프로젝트 / 경험 섹션 -->
+            <section id="projects" class="section">
+                <h2 class="section-title">📁 프로젝트 & 활동</h2>
+
+                <div class="project-list">
+                    <article class="project-card">
+                        <h3>자기소개 웹사이트</h3>
+                        <p>
+                            HTML, CSS, JavaScript를 사용해 반응형 자기소개
+                            페이지를 제작했습니다. 모바일, 태블릿, 데스크톱 화면
+                            크기에 따라 다른 레이아웃을 보여주도록 구성했습니다.
+                        </p>
+                        <ul>
+                            <li>구현: 레이아웃, 메뉴, 다크 모드 버튼</li>
+                            <li>도전: Flex/Grid 사용, media query 이해</li>
+                        </ul>
+                    </article>
+
+                    <article class="project-card">
+                        <h3>간단한 C 알고리즘 문제 풀이</h3>
+                        <p>
+                            백준 등의 사이트에서 정렬, 투 포인터 등 기본 알고리즘
+                            문제를 C 언어로 풀어보며 기초 프로그래밍 능력을 키웠습니다.
+                        </p>
+                        <ul>
+                            <li>배운 점: 배열, 함수 분리, 디버깅</li>
+                        </ul>
+                    </article>
+
+                    <article class="project-card">
+                        <h3>진로 탐색 및 상담 활동</h3>
+                        <p>
+                            학교 수업과 상담을 통해 보안, AI, 웹 개발 등 다양한
+                            분야를 탐색하며 제 진로를 고민하고 있습니다.
+                        </p>
+                        <ul>
+                            <li>보안 분야의 난이도와 필요 역량 조사</li>
+                            <li>웹 개발과의 연결점 고민</li>
+                        </ul>
+                    </article>
+                </div>
+            </section>
+
+            <!-- 연락 섹션 -->
+            <section id="contact" class="section section-alt">
+                <h2 class="section-title">📬 연락 & 목표</h2>
+                <p class="section-text">
+                    앞으로 더 많은 프로젝트를 진행하면서  
+                    협업하는 개발자가 되는 것이 목표입니다.
+                </p>
+
+                <div class="contact-grid">
+                    <div>
+                        <h3>연락처</h3>
+                        <p>이메일: <a href="mailto:smseok0104@gmail.com">smseok0104@gmail.com</a></p>
+                        <p>GitHub: <a href="https://github.com/hamsdgfh" target="_blank">github.com/hamsdgfh</a></p>
+                    </div>
+                    <div>
+                        <h3>단기 목표</h3>
+                        <ul>
+                            <li>기본적인 프론트엔드 포트폴리오 페이지 완성</li>
+                            <li>JavaScript 심화 문법 학습</li>
+                            <li>보안 기초 이론 공부 시작</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer">
+                © 2025 신민석. All rights reserved.
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // 모바일에서 햄버거 메뉴 열기/닫기
+        const menuToggle = document.querySelector(".menu-toggle");
+        const topNav = document.querySelector(".top-nav");
+
+        if (menuToggle && topNav) {
+            menuToggle.addEventListener("click", () => {
+                topNav.classList.toggle("open");
+            });
+
+            // 메뉴에서 항목 클릭하면 메뉴 닫기 (모바일 UX)
+            topNav.querySelectorAll("a").forEach((link) => {
+                link.addEventListener("click", () => {
+                    topNav.classList.remove("open");
+                });
+            });
+        }
+
+        // 다크 모드 토글
+        const themeToggle = document.getElementById("themeToggle");
+
+        if (themeToggle) {
+            themeToggle.addEventListener("click", () => {
+                document.body.classList.toggle("dark");
+                if (document.body.classList.contains("dark")) {
+                    themeToggle.textContent = "☀️ 라이트 모드";
+                } else {
+                    themeToggle.textContent = "🌙 다크 모드";
+                }
+            });
+        }
+
+        // 부드러운 스크롤
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener("click", function (e) {
+                const targetId = this.getAttribute("href");
+                const target = document.querySelector(targetId);
+                if (!target) return;
+                e.preventDefault();
+                window.scrollTo({
+                    top: target.offsetTop - 72,
+                    behavior: "smooth",
+                });
+            });
+        });
+    </script>
+</body>
+</html>
